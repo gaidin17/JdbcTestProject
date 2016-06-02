@@ -1,11 +1,15 @@
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import java.sql.*;
 import java.util.ArrayList;
 
 /**
  * Created by Evgeny_Akulenko on 4/28/2016.
+ * Class receives and stores information from the database
  */
 public class DBWorker {
+    private final Logger logger = LoggerFactory.getLogger(DBWorker.class);
     private String query;
     private Connection connection;
     private ArrayList<ArrayList<String>> table;
@@ -16,17 +20,27 @@ public class DBWorker {
     private ArrayList<Integer> collumnsMaxLengths;
     private String detString = " | ";
 
-
     public DBWorker(Connection connection, String query) throws SQLException {
         this.query = query;
         this.connection = connection;
         if (connection != null) {
             statement = connection.createStatement();
+            logger.info("INFO: make statement");
+
             resultSet = statement.executeQuery(query);
+            logger.info("INFO: make resultset");
+
             setColumnQuantity();
+            logger.info("INFO: set collumn quantity list");
+
             setColumnNames();
+            logger.info("INFO: set collumn names list");
+
             setTable();
+            logger.info("INFO: set result table list");
+
             setCollumnsMaxLengths();
+            logger.info("INFO: find collumn max length content");
         }
     }
 
@@ -36,7 +50,6 @@ public class DBWorker {
             columnNames.add(data.getColumnName(i));
         }
     }
-
 
     private void setTable() throws SQLException {
         table = new ArrayList<>();
@@ -56,7 +69,6 @@ public class DBWorker {
         }
     }
 
-
     private String addtoMaxString(String string, int max) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(string);
@@ -74,12 +86,10 @@ public class DBWorker {
         this.resultSet.close();
     }
 
-
     private void setColumnQuantity() throws SQLException {
         ResultSetMetaData data = resultSet.getMetaData();
         this.columnsQuntity = data.getColumnCount();
     }
-
 
     private void setCollumnsMaxLengths() {
         int rowlength = table.get(0).size();
@@ -102,6 +112,7 @@ public class DBWorker {
                 max = columnNames.get(j).length();
             }
             collumnsMaxLengths.add(max);
+            logger.debug("DEBUG: max content length in collumn with id: {} is {}", j, max);
         }
     }
 

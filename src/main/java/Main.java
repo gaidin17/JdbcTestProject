@@ -18,10 +18,8 @@ public class Main {
             dbWorker = new DBWorker(connector.getConnection(), query);
             logger.info("INFO: Set DBWorker: {}", dbWorker);
             dbWorker.printResultToConsol();
-        } catch (SQLException ex) {
-            logger.error("Error: {}", ex.getStackTrace());
         } catch (Exception ex) {
-            logger.error("Error: {}", ex.getStackTrace());
+            logger.error("Error: ", ex);
         } finally {
             logger.warn("Warn: closing connection:");
             try {
@@ -29,11 +27,8 @@ public class Main {
                     dbWorker.closeResultSet();
                     dbWorker.closeStatement();
                 }
-            } catch (SQLException ex) {
-                logger.error("Error: {}", ex.getStackTrace());
-
             } catch (Exception ex) {
-                logger.error("Error: {}", ex.getStackTrace());
+                logger.error("Error: ", ex);
             }
             connector.closeConnection();
         }

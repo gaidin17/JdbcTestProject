@@ -13,7 +13,7 @@ public class DBConnector {
     private final Logger logger = LoggerFactory.getLogger(DBConnector.class);
 
     private static final String URL = "jdbc:oracle:thin:@localhost:1521:XE";
-    private static final String USERNAME = "SOUTHWIND1";
+    private static final String USERNAME = "SOUTHWIND";
     private static final String PASSWORD = "SOUTHWIND";
     private Connection connection;
 

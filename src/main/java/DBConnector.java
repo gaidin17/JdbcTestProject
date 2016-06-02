@@ -13,7 +13,7 @@ public class DBConnector {
     private final Logger logger = LoggerFactory.getLogger(DBConnector.class);
 
     private static final String URL = "jdbc:oracle:thin:@localhost:1521:XE";
-    private static final String USERNAME = "SOUTHWIND";
+    private static final String USERNAME = "SOUTHWIND1";
     private static final String PASSWORD = "SOUTHWIND";
     private Connection connection;
 
@@ -23,7 +23,7 @@ public class DBConnector {
             connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
             logger.info("INFO: Connection to {} is open", connection);
         } catch (SQLException ex) {
-            logger.error("ERROR: No connection to {} ", URL);
+            logger.error("ERROR: ", ex);
         }
     }
 
@@ -34,7 +34,7 @@ public class DBConnector {
                 logger.info("INFO: Connection to {} is closed", URL);
             }
         } catch (SQLException ex) {
-            logger.error("ERROR: {}", ex.getErrorCode());
+            logger.error("ERROR: ", ex);
         }
     }
 
